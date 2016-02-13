@@ -15,62 +15,50 @@
 from io       import StringIO
 from unittest import main, TestCase
 
-from Netflix import netflix_read, netflix_eval, netflix_print, netflix_solve
+from Netflix import netflix_eval, netflix_print, netflix_solve
 
 # -----------
 # TestNetflix
 # -----------
 
 class TestNetflix (TestCase) :
-    
-    # ----
-    # read
-    # ----
-
-    def test_read (self) :
-        s    = "1 10\n"
-        i, j = netflix_read(s)
-        self.assertEqual(i,  1)
-        self.assertEqual(j, 10)
 
     # ----
     # eval
     # ----
 
     def test_eval_1 (self) :
-        v = netflix_eval(1, 10)
-        self.assertEqual(v, 1)
+        v = netflix_eval('1', 10)
+        self.assertEqual(v, 3.8)
 
     def test_eval_2 (self) :
-        v = netflix_eval(100, 200)
-        self.assertEqual(v, 1)
+        v = netflix_eval('10', 200)
+        self.assertEqual(v, 3.2)
 
-    def test_eval_3 (self) :
-        v = netflix_eval(201, 210)
-        self.assertEqual(v, 1)
-
-    def test_eval_4 (self) :
-        v = netflix_eval(900, 1000)
-        self.assertEqual(v, 1)
 
     # -----
     # print
     # -----
 
-    def test_print (self) :
+    def test_print_1 (self) :
         w = StringIO()
-        netflix_print(w, 1, 10, 20)
-        self.assertEqual(w.getvalue(), "1 10 20\n")
+        netflix_print(w, '10:')
+        self.assertEqual(w.getvalue(), "10:\n")
+
+    def test_print_2 (self) :
+        w = StringIO()
+        netflix_print(w, '10')
+        self.assertEqual(w.getvalue(), "10\n")
 
     # -----
     # solve
     # -----
 
     def test_solve (self) :
-        r = StringIO("1 10\n100 200\n201 210\n900 1000\n")
+        r = StringIO("1:\n1000\n1001\n1002\n")
         w = StringIO()
         netflix_solve(r, w)
-        self.assertEqual(w.getvalue(), "1 10 1\n100 200 1\n201 210 1\n900 1000 1\n")
+        self.assertEqual(w.getvalue(), "1:\n3.8\n3.8\n3.8\n")
 
 # ----
 # main
