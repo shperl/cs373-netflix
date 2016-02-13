@@ -15,6 +15,7 @@ from math           import sqrt
 from collections    import defaultdict
 from time           import mktime
 import json
+import pickle
 
 
 # ----------------------
@@ -29,6 +30,15 @@ output_data = {}
 
 with open('/u/fares/public_html/netflix-tests/ckc735-movies.json') as data_file:    
     movie_averages = json.load(data_file)
+
+if os.path.isfile('/u/fares/netflix-tests/mdg7227-real_scores.pickle') :
+    # Read cache from file system
+    f = open('/u/fares/public_html/netflix-tests/mdg7227-real_scores.pickle','rb')
+    real_scores = pickle.load(f)
+else:
+    # Read cache from HTTP
+    bytes = requests.get('http://www.cs.utexas.edu/users/fares/netflix-tests/mdg7227-real_scores.pickle').content
+    real_scores = pickle.loads(bytes)
 
 
 # ------------
@@ -124,3 +134,4 @@ def netflix_solve (r, w) :
             for value in output_data[str(key)]:
                 netflix_print(w, str(value))
         
+
