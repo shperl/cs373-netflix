@@ -53,7 +53,7 @@ def netflix_rmse (actual, prediction) :
         ds = d**2
         se += ds
 
-    return sqrt(se / len(z))
+    return sqrt(se / len(actual))
 
 
 

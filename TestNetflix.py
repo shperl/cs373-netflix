@@ -15,7 +15,7 @@
 from io       import StringIO
 from unittest import main, TestCase
 
-from Netflix import netflix_eval, netflix_print, netflix_solve
+from Netflix import netflix_eval, netflix_print, netflix_solve, netflix_rmse
 
 # -----------
 # TestNetflix
@@ -35,6 +35,14 @@ class TestNetflix (TestCase) :
         v = netflix_eval('10', 200)
         self.assertEqual(v, 3.2)
 
+
+    # ----
+    # rmse
+    # ----
+
+    def test_rmse_1 (self) :
+        v = netflix_rmse([1,2,3], [2,1,4])
+        self.assertEqual(v, 1)
 
     # -----
     # print
@@ -67,7 +75,7 @@ class TestNetflix (TestCase) :
 if __name__ == "__main__" :
     main()
 
-"""
+""" # pragma no cover
 % coverage3 run --branch TestNetflix.py >  TestNetflix.out 2>&1
 
 
