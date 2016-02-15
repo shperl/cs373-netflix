@@ -11,7 +11,6 @@
 # -------
 
 from pprint         import pprint
-from math           import sqrt
 from collections    import defaultdict
 from time           import mktime
 from numpy          import sqrt, subtract, mean, square
@@ -112,8 +111,10 @@ def netflix_solve (r, w) :
     prints the predicted scores and rmse for all movies and customers from reader
     """
     global output_data
+    global real_scores
 
-    ratings = []
+    pred_ratings = []
+    actual_ratings = []
     movie = ''
 
     for line in r :
@@ -122,21 +123,44 @@ def netflix_solve (r, w) :
         # create a new key & list of ratings
         if ':' in line:
             movie = str(line).strip(':\n')
-            ratings = []
-            output_data[movie] = ratings
+            pred_ratings = []
+            actual_ratings = []
+            
 
 
         # if it is not a movie id, call eval
         else:
-            score = netflix_eval(str(movie), int(line))
-            temp_list = [score]
-            ratings = ratings + temp_list
-            output_data[str(movie)] = ratings
+
+            customer = int(str(line).strip('\n'))
+
+            # Look up actual & predicted score from cache
+            predicted_score = [netflix_eval(str(movie), customer)]
+            actual_score = [real_scores[int(movie.strip(':'))][customer]]
+
+
+            # build list of predicted and actual ratings
+            pred_ratings = pred_ratings + predicted_score
+            actual_ratings = actual_ratings + actual_score
+            
+            output_data[movie] = [actual_ratings, pred_ratings]
+    
+    z1 = []
+    z2 = []
 
     for key in sorted(output_data.keys()):
+
+            z1 += [output_data[str(key)][0]]
+            z2 += [output_data[str(key)][1]]
+
             netflix_print(w, str(key + ':'))
             #netflix_print(w, (str(output_data[key])))
-            for value in output_data[str(key)]:
+            for value in output_data[str(key)][1]:
                 netflix_print(w, str(value))
+    print(output_data)
+
+    rmse = netflix_rmse(z1, z2)
+    print(rmse)
+    
+    netflix_print(w,str("RMSE: " + str(round(rmse,2))))
         
 
