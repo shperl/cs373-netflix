@@ -32,7 +32,3 @@ script:
     - ls -al
     - make check
 
-#!/usr/bin/env python
-
-import os
-import requests
