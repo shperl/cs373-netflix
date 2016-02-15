@@ -1,0 +1,65 @@
+commit 6275508bde794a2d346ce8f8b2d324af9536e835
+Author: Stephen Perl <shp425@cs.utexas.edu>
+Date:   Mon Feb 15 15:46:23 2016 -0600
+
+    added shell files for test cases to pass the file check in make check
+
+commit 166181df631400c7e41304d75bd963d1b34ed0cb
+Author: Stephen Perl <shp425@cs.utexas.edu>
+Date:   Mon Feb 15 15:35:04 2016 -0600
+
+    have working RMSE prototype working based on simple average of movie score
+
+commit 2d53d110f38cbd14a80ec56480f23fe97b335124
+Author: Stephen Perl <shp425@cs.utexas.edu>
+Date:   Mon Feb 15 14:42:44 2016 -0600
+
+    removed broken imports from .travis.yml
+
+commit 70f1b187571b282f6539e828a5afe2abf9cb2dbe
+Author: Stephen Perl <shp425@cs.utexas.edu>
+Date:   Mon Feb 15 14:41:36 2016 -0600
+
+    modified rmse, added numpy, made sure coverage doesn't test dist-packages
+
+commit 0292d4e8268819292ff9e7dda99682e545fc357d
+Author: Stephen Perl <shp425@cs.utexas.edu>
+Date:   Sat Feb 13 17:18:09 2016 -0600
+
+    testing out new cache for actual scores
+
+commit 20e68142e4026f048abe305f0d09302bc688e26f
+Author: Stephen Perl <shp425@cs.utexas.edu>
+Date:   Sat Feb 13 16:46:44 2016 -0600
+
+    added test for RMSE, not yet implemented in solution
+
+commit 22010aa69eb50d4465eda4c0c3126b517baef6dd
+Author: Stephen Perl <shp425@cs.utexas.edu>
+Date:   Sat Feb 13 16:41:01 2016 -0600
+
+    adding TestNetflix.out
+
+commit 6e0f7a815f3d5bf14376aece8af9db5a781f117e
+Author: Stephen Perl <shp425@cs.utexas.edu>
+Date:   Sat Feb 13 16:35:55 2016 -0600
+
+    working minimum solution without RMSE added. Also fixed test harness, no RMSE yet
+
+commit 29f2210495a799073acada4d97220386c1142ce5
+Author: Stephen Perl <shp425@cs.utexas.edu>
+Date:   Sat Feb 13 14:32:44 2016 -0600
+
+    added basic rmse method. next step to parse input file
+
+commit ed450a61725202f84c0085728a80beeb7dd60038
+Author: Stephen Perl <shp425@cs.utexas.edu>
+Date:   Sat Feb 13 12:04:53 2016 -0600
+
+    created shell files for netflix project from collatz boilerplates
+
+commit 14d2cedc2c521faa112ab477149f02edaf096c29
+Author: Stephen Perl <shp425@cs.utexas.edu>
+Date:   Sat Feb 13 11:39:56 2016 -0600
+
+    added travis.yml and makefile
