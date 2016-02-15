@@ -12,6 +12,7 @@ install:
     - pip --version
     - pip install coverage
     - pip install numpy
+    - pip3 install requests
 
 before_script:
     - uname -a
@@ -31,4 +32,7 @@ script:
     - ls -al
     - make check
 
+#!/usr/bin/env python
 
+import os
+import requests

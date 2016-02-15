@@ -32,6 +32,14 @@ check:
     fi;                                           \
     echo "success";
 
+
+install:
+	pip install --upgrade pip
+	pip --version
+	pip install coverage
+	pip install numpy
+	pip3 install requests
+
 clean:
 	rm -f  .coverage
 	rm -f  *.pyc
@@ -72,5 +80,5 @@ RunNetflix.tmp: RunNetflix.in RunNetflix.out RunNetflix.py
 
 TestNetflix.tmp: TestNetflix.py
 	coverage3 run    --branch TestNetflix.py >  TestNetflix.tmp 2>&1
-	coverage3 report -m                      >> TestNetflix.tmp
+	coverage3 report --omit='/lusr/lib/python3.4/dist-packages/*' -m >> TestNetflix.tmp
 	cat TestNetflix.tmp

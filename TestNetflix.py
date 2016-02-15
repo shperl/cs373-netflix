@@ -80,7 +80,7 @@ if __name__ == "__main__" :
 
 
 
-% coverage3 report -m                   >> TestNetflix.out
+% coverage3 report -m --omit='/lusr/lib/python3.4/dist-packages/*'                  >> TestNetflix.out
 
 
 

@@ -14,8 +14,11 @@ from pprint         import pprint
 from math           import sqrt
 from collections    import defaultdict
 from time           import mktime
+from numpy          import sqrt, subtract, mean, square
 import json
 import pickle
+import os
+import requests
 
 
 # ----------------------
@@ -28,16 +31,16 @@ ratings = 100480507
 
 output_data = {}
 
-with open('/u/fares/public_html/netflix-tests/ckc735-movies.json') as data_file:    
+with open('/u/downing/public_html/netflix-caches/ckc735-movies.json') as data_file:    
     movie_averages = json.load(data_file)
 
-if os.path.isfile('/u/fares/netflix-tests/mdg7227-real_scores.pickle') :
+if os.path.isfile('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle') :
     # Read cache from file system
-    f = open('/u/fares/public_html/netflix-tests/mdg7227-real_scores.pickle','rb')
+    f = open('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle','rb')
     real_scores = pickle.load(f)
 else:
     # Read cache from HTTP
-    bytes = requests.get('http://www.cs.utexas.edu/users/fares/netflix-tests/mdg7227-real_scores.pickle').content
+    bytes = requests.get('http://www.cs.utexas.edu/users/downing/netflix-caches/mdg7227-real_scores.pickle').content
     real_scores = pickle.loads(bytes)
 
 
@@ -48,24 +51,12 @@ else:
 def netflix_rmse (actual, prediction) :
     """
     compute the root mean squared error between actual scores and predicted scores
-    a a list
-    p a list
+    actual a list
+    prediction a list
     return a decimal, representing the root mean squared error of predicted scores
     """
 
-    # zip two lists into a list of tuples with corresponding values
-    z = zip(actual, prediction)
-    # the squared error
-    se = 0
-
-    for x, y in z:
-        d = x - y
-        ds = d**2
-        se += ds
-
-    return sqrt(se / len(actual))
-
-
+    return sqrt(mean(square(subtract(actual, prediction))))
 
 
 # ------------
@@ -95,11 +86,25 @@ def netflix_print (w, i) :
     """
     w.write(str(i) + "\n")
 
+
+# -------------
+# netflix_lookup
+# -------------
+
+def netflix_lookup (movie_id, customer_id) :
+    """
+    movie_id a string
+    customer_id a string
+    returns the actual score for a customer on a particular movie
+    """
+
+    global real_scores
+    return real_scores[movie_id][customer_id]
+
 # -------------
 # netflix_solve
 # -------------
 
-#def netflix_solve (r, w) :
 def netflix_solve (r, w) :
     """
     r a reader
