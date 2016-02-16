@@ -97,11 +97,11 @@ if __name__ == "__main__" :
     main()
 
 """ # pragma no cover
-% coverage3 run --branch TestNetflix.py >  TestNetflix.out 2>&1
+% coverage3 run --branch TestNetflix.py     > TestNetflix.out 2>&1
 
 
 
-% coverage3 report -m --omit='/lusr/lib/python3.4/dist-packages/*'                  >> TestNetflix.out
+% coverage3 report -m --omit='/lusr/lib/python3.4/dist-packages/*' >> TestNetflix.out
 
 
 
