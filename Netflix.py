@@ -74,6 +74,8 @@ def netflix_rmse (actual, prediction) :
     return a decimal, representing the root mean squared error of predicted scores
     """
 
+
+
     return sqrt(mean(square(subtract(actual, prediction))))
 
 
@@ -114,6 +116,35 @@ def netflix_print (w, i) :
     i the movie_id or the predicted score
     """
     w.write(str(i) + "\n")
+
+# -------------
+# netflix_zip
+# -------------
+
+def netflix_zip (output_data, w) :
+    """
+    Align two data sets for RMSE
+    output_data a dict
+    w a writer
+    returns two lists of corresponding actual and predicted values
+    """
+    z1 = []
+    z2 = []
+
+    for key in sorted(output_data.keys()):
+
+
+        z1 += (output_data[str(key)][0])
+        z2 += (output_data[str(key)][1])
+
+
+        netflix_print(w, str(key + ':'))
+
+        for value in output_data[str(key)][1]:
+            netflix_print(w, str(value))
+
+    return z1, z2
+
 
 
 # -------------
@@ -164,21 +195,7 @@ def netflix_solve (r, w) :
     
     z1 = []
     z2 = []
-
-    for key in sorted(output_data.keys()):
-
-
-        z1 += (output_data[str(key)][0])
-        z2 += (output_data[str(key)][1])
-
-
-        netflix_print(w, str(key + ':'))
-
-        for value in output_data[str(key)][1]:
-            netflix_print(w, str(value))
-
-
-
+    z1, z2 = netflix_zip(output_data, w)
     rmse = netflix_rmse(z1, z2)
     w.write(str("RMSE: " + str(round(rmse,2))))
 

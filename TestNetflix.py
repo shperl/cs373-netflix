@@ -15,7 +15,7 @@
 from io       import StringIO
 from unittest import main, TestCase
 
-from Netflix import netflix_eval, netflix_print, netflix_solve, netflix_rmse
+from Netflix import netflix_eval, netflix_print, netflix_solve, netflix_rmse, netflix_zip
 
 # -----------
 # TestNetflix
@@ -28,7 +28,8 @@ class TestNetflix (TestCase) :
             netflix_eval,
             netflix_print,
             netflix_solve,
-            netflix_rmse]
+            netflix_rmse,
+            netflix_zip]
 
     # ----
     # eval
@@ -44,6 +45,11 @@ class TestNetflix (TestCase) :
             v = netflix_eval('10017', 2280428)
             self.assertEqual(v, 2.9)
 
+    def test_eval_3 (self) :
+        with self.subTest():
+            v = netflix_eval('4310', 2523970)
+            self.assertEqual(v, 3.6)
+
 
 
     # ----
@@ -54,6 +60,22 @@ class TestNetflix (TestCase) :
         with self.subTest():
             v = netflix_rmse([1,2,3], [2,1,4])
             self.assertEqual(v, 1)
+
+    def test_rmse_2 (self) :
+        with self.subTest():
+            v = netflix_rmse([1,1,1], [2,2,2])
+            self.assertEqual(v, 1)
+
+    def test_rmse_3 (self) :
+        with self.subTest():
+            v = netflix_rmse([2,2,2], [1,1,1])
+            self.assertEqual(v, 1)
+
+    def test_rmse_4 (self) :
+        with self.subTest():
+            v = netflix_rmse([5, 5, 5], [4, 4, 4])
+            self.assertEqual(v, 1)
+
 
     # -----
     # print
@@ -70,6 +92,13 @@ class TestNetflix (TestCase) :
             w = StringIO()
             netflix_print(w, '10')
             self.assertEqual(w.getvalue(), "10\n")
+
+    def test_print_3 (self) :
+        with self.subTest():
+            w = StringIO()
+            netflix_print(w, '1')
+            self.assertEqual(w.getvalue(), "1\n")
+
 
     # -----
     # solve
@@ -88,6 +117,46 @@ class TestNetflix (TestCase) :
             w = StringIO()
             netflix_solve(r, w)
             self.assertEqual(w.getvalue(), "1:\n3.9\n3.5\n3.7\n10:\n3.1\n2.6\nRMSE: 0.43")
+
+    # -----
+    # zip
+    # -----
+
+    def test_zip_1 (self) :
+        with self.subTest():
+            w = StringIO()
+            z1 = []
+            z2 = []
+
+            test_output = {'test' : [[1], [1]]}
+            z1, z2 = netflix_zip(test_output, w)
+
+            self.assertEqual(z1, [1])
+            self.assertEqual(z2, [1])
+
+    def test_zip_2 (self) :
+        with self.subTest():
+            w = StringIO()
+            z1 = []
+            z2 = []
+
+            test_output = {'test' : [[2, 2], [1, 1]]}
+            z1, z2 = netflix_zip(test_output, w)
+
+            self.assertEqual(z1, [2, 2])
+            self.assertEqual(z2, [1, 1])
+
+    def test_zip_3 (self) :
+        with self.subTest():
+            w = StringIO()
+            z1 = []
+            z2 = []
+
+            test_output = {'test' : [[2, 2, 3], [1, 1, 2]]}
+            z1, z2 = netflix_zip(test_output, w)
+
+            self.assertEqual(z1, [2, 2, 3])
+            self.assertEqual(z2, [1, 1, 2])
 
 
 # ----
