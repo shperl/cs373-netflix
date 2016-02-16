@@ -79,14 +79,14 @@ class TestNetflix (TestCase) :
             r = StringIO("1:\n30878\n2647871\n1283744\n")
             w = StringIO()
             netflix_solve(r, w)
-            self.assertEqual(w.getvalue(), "1:\n3.8\n3.8\n3.8\nRMSE: 0.49\n")
+            self.assertEqual(w.getvalue(), "1:\n3.8\n3.8\n3.8\nRMSE: 0.49")
 
     def test_solve_2 (self) :
         with self.subTest():
             r = StringIO("1:\n30878\n2647871\n1283744\n10:\n1952305\n1531863\n")
             w = StringIO()
             netflix_solve(r, w)
-            self.assertEqual(w.getvalue(), "1:\n3.8\n3.8\n3.8\n10:\n3.2\n3.2\nRMSE: 0.4\n")
+            self.assertEqual(w.getvalue(), "1:\n3.8\n3.8\n3.8\n10:\n3.2\n3.2\nRMSE: 0.4")
 
 
 # ----

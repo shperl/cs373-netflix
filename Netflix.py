@@ -165,8 +165,7 @@ def netflix_solve (r, w) :
 
 
     rmse = netflix_rmse(z1, z2)
-    netflix_print(w,str("RMSE: " + str(round(rmse,2))))
-
+    w.write(str("RMSE: " + str(round(rmse,2))))
 
         
 
