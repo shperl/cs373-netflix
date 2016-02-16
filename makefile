@@ -13,6 +13,9 @@ FILES :=                              \
     TestNetflix.out                   \
     TestNetflix.py
 
+netflix-tests:
+	git clone https://github.com/cs373-spring-2016/netflix-tests.git
+
 check:
 	@not_found=0;                                 \
     for i in $(FILES);                            \
@@ -64,9 +67,6 @@ status:
 	git status
 
 test: RunNetflix.tmp TestNetflix.tmp
-
-netflix-tests:
-	git clone https://github.com/cs373-spring-2016/netflix-tests.git
 
 Netflix.html: Netflix.py
 	pydoc3 -w Netflix
