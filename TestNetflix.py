@@ -23,17 +23,26 @@ from Netflix import netflix_eval, netflix_print, netflix_solve, netflix_rmse
 
 class TestNetflix (TestCase) :
 
+    def setUp (self) :
+        self.a = [
+            netflix_eval,
+            netflix_print,
+            netflix_solve,
+            netflix_rmse]
+
     # ----
     # eval
     # ----
 
     def test_eval_1 (self) :
-        v = netflix_eval('1', 10)
-        self.assertEqual(v, 3.8)
+        with self.subTest():
+            v = netflix_eval('1', 10)
+            self.assertEqual(v, 3.8)
 
     def test_eval_2 (self) :
-        v = netflix_eval('10', 200)
-        self.assertEqual(v, 3.2)
+        with self.subTest():
+            v = netflix_eval('10', 200)
+            self.assertEqual(v, 3.2)
 
 
     # ----
@@ -41,32 +50,44 @@ class TestNetflix (TestCase) :
     # ----
 
     def test_rmse_1 (self) :
-        v = netflix_rmse([1,2,3], [2,1,4])
-        self.assertEqual(v, 1)
+        with self.subTest():
+            v = netflix_rmse([1,2,3], [2,1,4])
+            self.assertEqual(v, 1)
 
     # -----
     # print
     # -----
 
     def test_print_1 (self) :
-        w = StringIO()
-        netflix_print(w, '10:')
-        self.assertEqual(w.getvalue(), "10:\n")
+        with self.subTest():
+            w = StringIO()
+            netflix_print(w, '10:')
+            self.assertEqual(w.getvalue(), "10:\n")
 
     def test_print_2 (self) :
-        w = StringIO()
-        netflix_print(w, '10')
-        self.assertEqual(w.getvalue(), "10\n")
+        with self.subTest():
+            w = StringIO()
+            netflix_print(w, '10')
+            self.assertEqual(w.getvalue(), "10\n")
 
     # -----
     # solve
     # -----
 
-    def test_solve (self) :
-        r = StringIO("1:\n30878\n2647871\n1283744\n")
-        w = StringIO()
-        netflix_solve(r, w)
-        self.assertEqual(w.getvalue(), "1:\n3.8\n3.8\n3.8\nRMSE: 0.49\n")
+    def test_solve_1 (self) :
+        with self.subTest():
+            r = StringIO("1:\n30878\n2647871\n1283744\n")
+            w = StringIO()
+            netflix_solve(r, w)
+            self.assertEqual(w.getvalue(), "1:\n3.8\n3.8\n3.8\nRMSE: 0.49\n")
+
+    def test_solve_2 (self) :
+        with self.subTest():
+            r = StringIO("1:\n30878\n2647871\n1283744\n10:\n1952305\n1531863\n")
+            w = StringIO()
+            netflix_solve(r, w)
+            self.assertEqual(w.getvalue(), "1:\n3.8\n3.8\n3.8\n10:\n3.2\n3.2\nRMSE: 0.4\n")
+
 
 # ----
 # main

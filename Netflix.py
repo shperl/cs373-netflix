@@ -14,6 +14,7 @@ from pprint         import pprint
 from collections    import defaultdict
 from time           import mktime
 from numpy          import sqrt, subtract, mean, square
+from collections    import OrderedDict
 import json
 import pickle
 import os
@@ -28,7 +29,7 @@ movies = 17770
 users = 480189
 ratings = 100480507
 
-output_data = {}
+output_data = OrderedDict()
 
 with open('/u/downing/public_html/netflix-caches/ckc735-movies.json') as data_file:    
     movie_averages = json.load(data_file)
@@ -123,6 +124,7 @@ def netflix_solve (r, w) :
         # create a new key & list of ratings
         if ':' in line:
             movie = str(line).strip(':\n')
+
             pred_ratings = []
             actual_ratings = []
             
@@ -142,6 +144,7 @@ def netflix_solve (r, w) :
             pred_ratings = pred_ratings + predicted_score
             actual_ratings = actual_ratings + actual_score
             
+            # output_data.pop(movie)
             output_data[movie] = [actual_ratings, pred_ratings]
     
     z1 = []
@@ -149,18 +152,21 @@ def netflix_solve (r, w) :
 
     for key in sorted(output_data.keys()):
 
-            z1 += [output_data[str(key)][0]]
-            z2 += [output_data[str(key)][1]]
 
-            netflix_print(w, str(key + ':'))
-            #netflix_print(w, (str(output_data[key])))
-            for value in output_data[str(key)][1]:
-                netflix_print(w, str(value))
-    print(output_data)
+        z1 += (output_data[str(key)][0])
+        z2 += (output_data[str(key)][1])
+
+
+        netflix_print(w, str(key + ':'))
+
+        for value in output_data[str(key)][1]:
+            netflix_print(w, str(value))
+
+
 
     rmse = netflix_rmse(z1, z2)
-    print(rmse)
-    
     netflix_print(w,str("RMSE: " + str(round(rmse,2))))
+
+
         
 
