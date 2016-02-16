@@ -11,7 +11,6 @@
 # -------
 
 from pprint         import pprint
-from collections    import defaultdict
 from time           import mktime
 from numpy          import sqrt, subtract, mean, square
 from collections    import OrderedDict
@@ -25,20 +24,39 @@ import requests
 # set globals and caches
 # ----------------------
 
-movies = 17770
-users = 480189
-ratings = 100480507
-
 output_data = OrderedDict()
+customer_avg = {}
+real_scores = {}
+movie_averages = {}
+
 
 with open('/u/downing/public_html/netflix-caches/ckc735-movies.json') as data_file:    
-    movie_averages = json.load(data_file)
+   movie_averages = json.load(data_file)
+
+if os.path.isfile('/u/downing/public_html/netflix-caches/kh549-customer_average.pickle') :
+    # Read cache from file system
+    f = open('/u/downing/public_html/netflix-caches/kh549-customer_average.pickle','rb')
+    customer_avg = pickle.load(f)
+else: # pragma no cover
+    # Read cache from HTTP
+    bytes = requests.get('http://www.cs.utexas.edu/users/downing/netflix-caches/kh549-customer_average.pickle').content
+    customer_avg = pickle.loads(bytes)
+
 
 if os.path.isfile('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle') :
     # Read cache from file system
     f = open('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle','rb')
     real_scores = pickle.load(f)
-else:
+else: # pragma no cover
+    # Read cache from HTTP
+    bytes = requests.get('http://www.cs.utexas.edu/users/downing/netflix-caches/mdg7227-real_scores.pickle').content
+    real_scores = pickle.loads(bytes)
+
+if os.path.isfile('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle') :
+    # Read cache from file system
+    f = open('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle','rb')
+    real_scores = pickle.load(f)
+else: # pragma no cover
     # Read cache from HTTP
     bytes = requests.get('http://www.cs.utexas.edu/users/downing/netflix-caches/mdg7227-real_scores.pickle').content
     real_scores = pickle.loads(bytes)
@@ -67,12 +85,23 @@ def netflix_eval (movie_id, customer_id) :
     """
     movie_id the movie being rated
     customer_id the customer rating being predicted for a particular movie
-    return the predicted value of the movie rating for the customer
+    return the predicted value of the movie rating for the customer taken by the average rating for a movie minus the average offset
     """
 
     global movie_averages
+    global real_scores
 
-    return round(movie_averages[movie_id], 1)
+    total_offset = 0
+    num_movies = 0
+
+    for movie in real_scores:
+        if customer_id in real_scores[movie]:
+           total_offset += (movie_averages[str(movie)] - real_scores[movie][customer_id])
+           num_movies += 1
+
+    avg_offset = total_offset / num_movies
+
+    return round(movie_averages[movie_id] - avg_offset, 1)
 
 # -------------
 # netflix_print
@@ -86,20 +115,6 @@ def netflix_print (w, i) :
     """
     w.write(str(i) + "\n")
 
-
-# -------------
-# netflix_lookup
-# -------------
-
-def netflix_lookup (movie_id, customer_id) :
-    """
-    movie_id a string
-    customer_id a string
-    returns the actual score for a customer on a particular movie
-    """
-
-    global real_scores
-    return real_scores[movie_id][customer_id]
 
 # -------------
 # netflix_solve

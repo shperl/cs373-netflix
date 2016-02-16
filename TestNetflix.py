@@ -37,12 +37,13 @@ class TestNetflix (TestCase) :
     def test_eval_1 (self) :
         with self.subTest():
             v = netflix_eval('1', 10)
-            self.assertEqual(v, 3.8)
+            self.assertEqual(v, 3.6)
 
     def test_eval_2 (self) :
         with self.subTest():
-            v = netflix_eval('10', 200)
-            self.assertEqual(v, 3.2)
+            v = netflix_eval('10017', 2280428)
+            self.assertEqual(v, 2.9)
+
 
 
     # ----
@@ -79,14 +80,14 @@ class TestNetflix (TestCase) :
             r = StringIO("1:\n30878\n2647871\n1283744\n")
             w = StringIO()
             netflix_solve(r, w)
-            self.assertEqual(w.getvalue(), "1:\n3.8\n3.8\n3.8\nRMSE: 0.49")
+            self.assertEqual(w.getvalue(), "1:\n3.9\n3.5\n3.7\nRMSE: 0.5")
 
     def test_solve_2 (self) :
         with self.subTest():
             r = StringIO("1:\n30878\n2647871\n1283744\n10:\n1952305\n1531863\n")
             w = StringIO()
             netflix_solve(r, w)
-            self.assertEqual(w.getvalue(), "1:\n3.8\n3.8\n3.8\n10:\n3.2\n3.2\nRMSE: 0.4")
+            self.assertEqual(w.getvalue(), "1:\n3.9\n3.5\n3.7\n10:\n3.1\n2.6\nRMSE: 0.43")
 
 
 # ----
