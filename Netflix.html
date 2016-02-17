@@ -38,17 +38,19 @@ Convert&nbsp;a&nbsp;time&nbsp;tuple&nbsp;in&nbsp;local&nbsp;time&nbsp;to&nbsp;se
 Note&nbsp;that&nbsp;<a href="#-mktime">mktime</a>(gmtime(0))&nbsp;will&nbsp;not&nbsp;generally&nbsp;return&nbsp;zero&nbsp;for&nbsp;most<br>
 time&nbsp;zones;&nbsp;instead&nbsp;the&nbsp;returned&nbsp;value&nbsp;will&nbsp;either&nbsp;be&nbsp;equal&nbsp;to&nbsp;that<br>
 of&nbsp;the&nbsp;timezone&nbsp;or&nbsp;altzone&nbsp;attributes&nbsp;on&nbsp;the&nbsp;time&nbsp;module.</tt></dd></dl>
- <dl><dt><a name="-netflix_eval"><strong>netflix_eval</strong></a>(movie_id, customer_id)</dt><dd><tt>movie_id&nbsp;the&nbsp;movie&nbsp;being&nbsp;rated<br>
+ <dl><dt><a name="-netflix_eval"><strong>netflix_eval</strong></a>(movie_id, customer_id)</dt><dd><tt>evaluate&nbsp;the&nbsp;predicted&nbsp;score&nbsp;of&nbsp;a&nbsp;customer&nbsp;for&nbsp;a&nbsp;movie<br>
+movie_id&nbsp;the&nbsp;movie&nbsp;being&nbsp;rated<br>
 customer_id&nbsp;the&nbsp;customer&nbsp;rating&nbsp;being&nbsp;predicted&nbsp;for&nbsp;a&nbsp;particular&nbsp;movie<br>
 return&nbsp;the&nbsp;predicted&nbsp;value&nbsp;of&nbsp;the&nbsp;movie&nbsp;rating&nbsp;for&nbsp;the&nbsp;customer&nbsp;taken&nbsp;by&nbsp;the&nbsp;average&nbsp;rating&nbsp;for&nbsp;a&nbsp;movie&nbsp;minus&nbsp;the&nbsp;average&nbsp;offset</tt></dd></dl>
- <dl><dt><a name="-netflix_print"><strong>netflix_print</strong></a>(w, i)</dt><dd><tt>print&nbsp;one&nbsp;line&nbsp;of&nbsp;text<br>
+ <dl><dt><a name="-netflix_print"><strong>netflix_print</strong></a>(w, i)</dt><dd><tt>print&nbsp;one&nbsp;line&nbsp;of&nbsp;text&nbsp;to&nbsp;buffer<br>
 w&nbsp;a&nbsp;writer<br>
 i&nbsp;the&nbsp;movie_id&nbsp;or&nbsp;the&nbsp;predicted&nbsp;score</tt></dd></dl>
  <dl><dt><a name="-netflix_rmse"><strong>netflix_rmse</strong></a>(actual, prediction)</dt><dd><tt>compute&nbsp;the&nbsp;root&nbsp;mean&nbsp;squared&nbsp;error&nbsp;between&nbsp;actual&nbsp;scores&nbsp;and&nbsp;predicted&nbsp;scores<br>
 actual&nbsp;a&nbsp;list<br>
 prediction&nbsp;a&nbsp;list<br>
 return&nbsp;a&nbsp;decimal,&nbsp;representing&nbsp;the&nbsp;root&nbsp;mean&nbsp;squared&nbsp;error&nbsp;of&nbsp;predicted&nbsp;scores</tt></dd></dl>
- <dl><dt><a name="-netflix_solve"><strong>netflix_solve</strong></a>(r, w)</dt><dd><tt>r&nbsp;a&nbsp;reader<br>
+ <dl><dt><a name="-netflix_solve"><strong>netflix_solve</strong></a>(r, w)</dt><dd><tt>predict&nbsp;the&nbsp;scores&nbsp;for&nbsp;a&nbsp;list&nbsp;of&nbsp;movies&nbsp;and&nbsp;customers&nbsp;then&nbsp;compute&nbsp;the&nbsp;RMSE<br>
+r&nbsp;a&nbsp;reader<br>
 w&nbsp;a&nbsp;writer<br>
 prints&nbsp;the&nbsp;predicted&nbsp;scores&nbsp;and&nbsp;rmse&nbsp;for&nbsp;all&nbsp;movies&nbsp;and&nbsp;customers&nbsp;from&nbsp;reader</tt></dd></dl>
  <dl><dt><a name="-netflix_zip"><strong>netflix_zip</strong></a>(output_data, w)</dt><dd><tt>Align&nbsp;two&nbsp;data&nbsp;sets&nbsp;for&nbsp;RMSE<br>
@@ -62,8 +64,7 @@ returns&nbsp;two&nbsp;lists&nbsp;of&nbsp;corresponding&nbsp;actual&nbsp;and&nbsp
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>__warningregistry__</strong> = {("unclosed file &lt;_io.BufferedReader name='/u/downi...ml/netflix-caches/kh549-customer_average.pickle'&gt;", &lt;class 'ResourceWarning'&gt;, 48): True, ("unclosed file &lt;_io.BufferedReader name='/u/downi..._html/netflix-caches/mdg7227-real_scores.pickle'&gt;", &lt;class 'ResourceWarning'&gt;, 57): True, 'version': 12}<br>
-<strong>customer_avg</strong> = {6: 3.4185303514377, 7: 4.011350737797957, 8: 4.214285714285714, 10: 3.3923076923076922, 25: 3.4814814814814814, 33: 3.75, 42: 3.921875, 59: 3.7070063694267517, 79: 3.548994974874372, 83: 3.96875, ...}<br>
+<td width="100%"><strong>customer_avg</strong> = {6: 3.4185303514377, 7: 4.011350737797957, 8: 4.214285714285714, 10: 3.3923076923076922, 25: 3.4814814814814814, 33: 3.75, 42: 3.921875, 59: 3.7070063694267517, 79: 3.548994974874372, 83: 3.96875, ...}<br>
 <strong>data_file</strong> = &lt;_io.TextIOWrapper name='/u/downing/public_html/...es/ckc735-movies.json' mode='r' encoding='UTF-8'&gt;<br>
 <strong>f</strong> = &lt;_io.BufferedReader name='/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle'&gt;<br>
 <strong>movie_averages</strong> = {'1': 3.75, '10': 3.18, '100': 2.65, '1000': 3.28, '10000': 2.9, '10001': 3.8, '10002': 3.44, '10003': 2.47, '10004': 4.21, '10005': 3.25, ...}<br>

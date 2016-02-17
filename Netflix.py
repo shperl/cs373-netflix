@@ -37,6 +37,7 @@ if os.path.isfile('/u/downing/public_html/netflix-caches/kh549-customer_average.
     # Read cache from file system
     f = open('/u/downing/public_html/netflix-caches/kh549-customer_average.pickle','rb')
     customer_avg = pickle.load(f)
+    f.close()
 else: # pragma no cover
     # Read cache from HTTP
     bytes = requests.get('http://www.cs.utexas.edu/users/downing/netflix-caches/kh549-customer_average.pickle').content
@@ -47,6 +48,7 @@ if os.path.isfile('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pic
     # Read cache from file system
     f = open('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle','rb')
     real_scores = pickle.load(f)
+    f.close()
 else: # pragma no cover
     # Read cache from HTTP
     bytes = requests.get('http://www.cs.utexas.edu/users/downing/netflix-caches/mdg7227-real_scores.pickle').content
@@ -56,6 +58,7 @@ if os.path.isfile('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pic
     # Read cache from file system
     f = open('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle','rb')
     real_scores = pickle.load(f)
+    f.close()
 else: # pragma no cover
     # Read cache from HTTP
     bytes = requests.get('http://www.cs.utexas.edu/users/downing/netflix-caches/mdg7227-real_scores.pickle').content
@@ -85,6 +88,7 @@ def netflix_rmse (actual, prediction) :
 
 def netflix_eval (movie_id, customer_id) :
     """
+    evaluate the predicted score of a customer for a movie
     movie_id the movie being rated
     customer_id the customer rating being predicted for a particular movie
     return the predicted value of the movie rating for the customer taken by the average rating for a movie minus the average offset
@@ -111,7 +115,7 @@ def netflix_eval (movie_id, customer_id) :
 
 def netflix_print (w, i) :
     """
-    print one line of text
+    print one line of text to buffer
     w a writer
     i the movie_id or the predicted score
     """
@@ -153,6 +157,7 @@ def netflix_zip (output_data, w) :
 
 def netflix_solve (r, w) :
     """
+    predict the scores for a list of movies and customers then compute the RMSE
     r a reader
     w a writer
     prints the predicted scores and rmse for all movies and customers from reader
