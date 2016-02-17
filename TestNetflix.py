@@ -14,8 +14,9 @@
 
 from io       import StringIO
 from unittest import main, TestCase
+import pickle
 
-from Netflix import netflix_eval, netflix_print, netflix_solve, netflix_rmse, netflix_zip
+from Netflix import netflix_eval, netflix_print, netflix_solve, netflix_rmse, netflix_zip, get_pickle
 
 # -----------
 # TestNetflix
@@ -29,7 +30,8 @@ class TestNetflix (TestCase) :
             netflix_print,
             netflix_solve,
             netflix_rmse,
-            netflix_zip]
+            netflix_zip,
+            get_pickle]
 
     # ----
     # eval
@@ -50,6 +52,24 @@ class TestNetflix (TestCase) :
             v = netflix_eval('4310', 2523970)
             self.assertEqual(v, 3.6)
 
+    # ------
+    # pickle
+    # ------
+
+    def test_pickle_1 (self) :
+        with self.subTest():
+            v = get_pickle('kh549-customer_average.pickle')
+            self.assertFalse(v is None)
+
+    def test_pickle_2 (self) :
+        with self.subTest():
+            v = get_pickle('mdg7227-real_scores.pickle')
+            self.assertFalse(v is None)
+
+    def test_pickle_3 (self) :
+        with self.subTest():
+            v = get_pickle('mdg7227-movie_last_rating.pickle')
+            self.assertFalse(v is None)
 
 
     # ----

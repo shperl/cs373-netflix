@@ -19,50 +19,46 @@ import pickle
 import os
 import requests
 
+# ------------
+# get_pickle
+# ------------
+
+def get_pickle (filepath) :
+    """
+    Accept a file patch to a .pickle cache file and return a dict
+    filepath a string
+    return a loaded pickle object
+    """
+
+    answer = {}
+
+    if os.path.isfile('/u/downing/public_html/netflix-caches/' + filepath) :
+    # Read cache from file system
+        f = open('/u/downing/public_html/netflix-caches/' + filepath,'rb')
+        answer = pickle.load(f)
+        f.close()
+    else: # pragma no cover
+    # Read cache from HTTP
+        bytes = requests.get('http://www.cs.utexas.edu/users/downing/netflix-caches/' + filepath).content
+        answer = pickle.loads(bytes)
+
+    return answer
+
 
 # ----------------------
 # set globals and caches
 # ----------------------
 
 output_data = OrderedDict()
-customer_avg = {}
-real_scores = {}
 movie_averages = {}
-
+customer_avg = get_pickle('kh549-customer_average.pickle')
+real_scores = get_pickle('mdg7227-real_scores.pickle')
 
 with open('/u/downing/public_html/netflix-caches/ckc735-movies.json') as data_file:    
    movie_averages = json.load(data_file)
 
-if os.path.isfile('/u/downing/public_html/netflix-caches/kh549-customer_average.pickle') :
-    # Read cache from file system
-    f = open('/u/downing/public_html/netflix-caches/kh549-customer_average.pickle','rb')
-    customer_avg = pickle.load(f)
-    f.close()
-else: # pragma no cover
-    # Read cache from HTTP
-    bytes = requests.get('http://www.cs.utexas.edu/users/downing/netflix-caches/kh549-customer_average.pickle').content
-    customer_avg = pickle.loads(bytes)
 
 
-if os.path.isfile('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle') :
-    # Read cache from file system
-    f = open('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle','rb')
-    real_scores = pickle.load(f)
-    f.close()
-else: # pragma no cover
-    # Read cache from HTTP
-    bytes = requests.get('http://www.cs.utexas.edu/users/downing/netflix-caches/mdg7227-real_scores.pickle').content
-    real_scores = pickle.loads(bytes)
-
-if os.path.isfile('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle') :
-    # Read cache from file system
-    f = open('/u/downing/public_html/netflix-caches/mdg7227-real_scores.pickle','rb')
-    real_scores = pickle.load(f)
-    f.close()
-else: # pragma no cover
-    # Read cache from HTTP
-    bytes = requests.get('http://www.cs.utexas.edu/users/downing/netflix-caches/mdg7227-real_scores.pickle').content
-    real_scores = pickle.loads(bytes)
 
 
 # ------------
@@ -76,9 +72,6 @@ def netflix_rmse (actual, prediction) :
     prediction a list
     return a decimal, representing the root mean squared error of predicted scores
     """
-
-
-
     return sqrt(mean(square(subtract(actual, prediction))))
 
 
