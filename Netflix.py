@@ -53,6 +53,7 @@ output_data = OrderedDict()
 movie_averages = {}
 customer_avg = get_pickle('kh549-customer_average.pickle')
 real_scores = get_pickle('mdg7227-real_scores.pickle')
+offsets = get_pickle('shp425-avg_offsets.pickle')
 
 with open('/u/downing/public_html/netflix-caches/ckc735-movies.json') as data_file:    
    movie_averages = json.load(data_file)
@@ -88,19 +89,20 @@ def netflix_eval (movie_id, customer_id) :
     """
 
     global movie_averages
-    global real_scores
+    # global real_scores
+    global avg_offsets
 
-    total_offset = 0
-    num_movies = 0
+    # total_offset = 0
+    # num_movies = 0
 
-    for movie in real_scores:
-        if customer_id in real_scores[movie]:
-           total_offset += (movie_averages[str(movie)] - real_scores[movie][customer_id])
-           num_movies += 1
+    # for movie in real_scores:
+    #     if customer_id in real_scores[movie]:
+    #        total_offset += (movie_averages[str(movie)] - real_scores[movie][customer_id])
+    #        num_movies += 1
 
-    avg_offset = total_offset / num_movies
+    # avg_offset = total_offset / num_movies
 
-    return round(movie_averages[movie_id] - avg_offset, 1)
+    return round(movie_averages[movie_id] - avg_offsets[customer_id], 1)
 
 # -------------
 # netflix_print
