@@ -53,7 +53,7 @@ output_data = OrderedDict()
 movie_averages = {}
 customer_avg = get_pickle('kh549-customer_average.pickle')
 real_scores = get_pickle('mdg7227-real_scores.pickle')
-offsets = get_pickle('shp425-avg_offsets.pickle')
+offsets = get_pickle('shp425-avg_offset.pickle')
 
 with open('/u/downing/public_html/netflix-caches/ckc735-movies.json') as data_file:    
    movie_averages = json.load(data_file)
