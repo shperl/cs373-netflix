@@ -3,7 +3,8 @@
 # ---------------------------
 # projects/Netflix/Netflix.py
 # Copyright (C) 2016
-# Glenn P. Downing
+# Author (Project): Glenn P. Downing
+# Author (Solution): Stephen Perl
 # ---------------------------
 
 # -------
@@ -89,19 +90,8 @@ def netflix_eval (movie_id, customer_id) :
     """
 
     global movie_averages
-    # global real_scores
     global avg_offsets
-
-    # total_offset = 0
-    # num_movies = 0
-
-    # for movie in real_scores:
-    #     if customer_id in real_scores[movie]:
-    #        total_offset += (movie_averages[str(movie)] - real_scores[movie][customer_id])
-    #        num_movies += 1
-
-    # avg_offset = total_offset / num_movies
-
+    
     return round(movie_averages[movie_id] - avg_offsets[customer_id], 1)
 
 # -------------
@@ -132,10 +122,8 @@ def netflix_zip (output_data, w) :
 
     for key in sorted(output_data.keys()):
 
-
         z1 += (output_data[str(key)][0])
         z2 += (output_data[str(key)][1])
-
 
         netflix_print(w, str(key + ':'))
 
